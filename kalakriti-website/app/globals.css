@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated to vibrant traditional Indian art color palette */
+  --background: oklch(0.98 0.02 45); /* Warm cream background */
+  --foreground: oklch(0.25 0.05 30); /* Deep brown text */
+  --card: oklch(0.96 0.03 50); /* Light clay tint */
+  --card-foreground: oklch(0.25 0.05 30);
+  --popover: oklch(0.98 0.02 45);
+  --popover-foreground: oklch(0.25 0.05 30);
+  --primary: oklch(0.45 0.2 25); /* Saffron orange */
+  --primary-foreground: oklch(0.98 0.02 45);
+  --secondary: oklch(0.35 0.18 240); /* Royal blue */
+  --secondary-foreground: oklch(0.98 0.02 45);
+  --muted: oklch(0.92 0.03 45); /* Muted clay */
+  --muted-foreground: oklch(0.45 0.05 30);
+  --accent: oklch(0.45 0.15 80); /* Emerald green */
+  --accent-foreground: oklch(0.98 0.02 45);
+  --destructive: oklch(0.55 0.25 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.88 0.03 45);
+  --input: oklch(0.94 0.03 45);
+  --ring: oklch(0.45 0.2 25 / 0.5);
+  /* Vibrant traditional Indian art inspired chart colors */
+  --chart-1: oklch(0.45 0.2 25); /* Saffron orange */
+  --chart-2: oklch(0.35 0.18 240); /* Royal blue */
+  --chart-3: oklch(0.45 0.15 80); /* Emerald green */
+  --chart-4: oklch(0.65 0.2 35); /* Turmeric yellow */
+  --chart-5: oklch(0.35 0.15 320); /* Deep maroon */
+  --radius: 0.625rem;
+  --sidebar: oklch(0.96 0.03 50);
+  --sidebar-foreground: oklch(0.25 0.05 30);
+  --sidebar-primary: oklch(0.92 0.03 45);
+  --sidebar-primary-foreground: oklch(0.45 0.2 25);
+  --sidebar-accent: oklch(0.45 0.15 80);
+  --sidebar-accent-foreground: oklch(0.98 0.02 45);
+  --sidebar-border: oklch(0.88 0.03 45);
+  --sidebar-ring: oklch(0.45 0.2 25 / 0.5);
+}
+
+.dark {
+  /* Keeping dark mode minimal since user wants light theme */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    /* Added global traditional Indian artwork background */
+    background-image: radial-gradient(circle at 20% 80%, oklch(0.45 0.2 25 / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, oklch(0.35 0.18 240 / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, oklch(0.45 0.15 80 / 0.03) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e67e22' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+  /* Updated gradient backgrounds for vibrant Indian art theme */
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      oklch(0.96 0.03 50) 0%,
+      oklch(0.94 0.04 40) 25%,
+      oklch(0.95 0.03 60) 50%,
+      oklch(0.94 0.04 30) 75%,
+      oklch(0.96 0.03 50) 100%
+    );
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, oklch(0.45 0.2 25), oklch(0.35 0.18 240), oklch(0.45 0.15 80));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  /* Enhanced animation for logo zoom effect */
+  @keyframes logoZoom {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) translateY(-100vh);
+      opacity: 0;
+    }
+  }
+  .logo-animation {
+    animation: logoZoom 2.5s ease-in-out forwards;
+  }
+  /* Added colorful card variants */
+  .card-saffron {
+    background: linear-gradient(135deg, oklch(0.45 0.2 25 / 0.1), oklch(0.45 0.2 25 / 0.05));
+    border: 1px solid oklch(0.45 0.2 25 / 0.2);
+  }
+  .card-royal {
+    background: linear-gradient(135deg, oklch(0.35 0.18 240 / 0.1), oklch(0.35 0.18 240 / 0.05));
+    border: 1px solid oklch(0.35 0.18 240 / 0.2);
+  }
+  .card-emerald {
+    background: linear-gradient(135deg, oklch(0.45 0.15 80 / 0.1), oklch(0.45 0.15 80 / 0.05));
+    border: 1px solid oklch(0.45 0.15 80 / 0.2);
+  }
+}
