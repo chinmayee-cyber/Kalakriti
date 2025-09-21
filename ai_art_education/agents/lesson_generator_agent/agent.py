@@ -1,5 +1,4 @@
-from google.adk import LlmAgent
-from config import settings
+from google.adk.agents import LlmAgent
 
 lesson_agent = LlmAgent(
     model="gemini-2.5-flash",

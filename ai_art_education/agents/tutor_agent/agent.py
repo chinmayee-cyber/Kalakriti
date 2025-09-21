@@ -1,6 +1,6 @@
 from google.adk.agents import LlmAgent
 from google.adk.sessions import InMemorySessionService
-from tools.search_tool import TavilySearchTool
+from ai_art_education.tools.search_tool import TavilySearchTool
 
 # Initialize session service (memory)
 session_service = InMemorySessionService()

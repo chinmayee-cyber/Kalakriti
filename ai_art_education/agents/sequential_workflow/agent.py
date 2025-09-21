@@ -1,0 +1,12 @@
+from google.adk.agents import SequentialAgent
+from ai_art_education.agents.lesson_generator_agent import lesson_agent
+from ai_art_education.agents.tutor_agent import tutor_agent
+
+# Define main pipeline agent
+main_pipeline = SequentialAgent(
+    name="art_education_pipeline",
+    sub_agents=[
+        lesson_agent,
+        tutor_agent
+    ]
+)
