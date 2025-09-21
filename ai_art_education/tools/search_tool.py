@@ -5,7 +5,7 @@ import logging
 from typing import List, Dict, Any, Optional
 
 from tavily import TavilyClient
-from config import settings
+from ai_art_education.config import settings
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

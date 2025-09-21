@@ -6,10 +6,7 @@ from ai_art_education.agents.tutor_agent import tutor_agent
 main_pipeline = SequentialAgent(
     name="art_education_pipeline",
     sub_agents=[
-        # Step 1: Generate raw lesson
         lesson_agent,
-
-        # Step 2: Tutor agent refines / compares using lesson data
         tutor_agent
     ]
 )
