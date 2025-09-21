@@ -1,120 +1,113 @@
-import json
-import asyncio
-from typing import Dict, Any, List, Optional
-from dataclasses import dataclass
 from google.adk.agents import LlmAgent
-from google.adk.tools import FunctionTool
+from config import settings
 
-from tools.search_tool import TavilySearchTool
-from agents.lesson_generator import LessonGenerator, LessonContent
-from models.data_models import LessonPlan, ArtStyleComparison
-from services.template_service import TemplateService
+tutor_agent = LlmAgent(
+    model=settings.LLM_MODEL,
+    name="tutor_agent",
+    description="""
+        Tutor agent that generates structured, culturally respectful art lessons and 
+        compares art styles. Produces strict JSON outputs that match the LessonContent 
+        and comparison schemas. Designed to be used with an external LessonGenerator/RAG 
+        pipeline (search_context and canonical_context are provided as grounding).
+    """,
+    instruction="""
+        You are a focused, practical art tutor agent. You will receive a single JSON input (no surrounding text)
+        with one of these actions:
 
-@dataclass
-class UserContext:
-    level: str = "beginner"
-    interests: List[str] = None
-    previous_styles: List[str] = None
-    learning_goals: List[str] = None
-    
-    def __post_init__(self):
-        if self.interests is None:
-            self.interests = []
-        if self.previous_styles is None:
-            self.previous_styles = []
-        if self.learning_goals is None:
-            self.learning_goals = []
-
-class TeachStyleAgent:
-    """Enhanced art teaching agent with new features"""
-    
-    def __init__(self):
-        self.search_tool = TavilySearchTool()
-        self.template_service = TemplateService()
-        self.lesson_generator = LessonGenerator()  # Add this line
-        self.canonical_lessons = self._load_canonical_lessons()
-    
-    # Update the generate_lesson_plan method
-    async def generate_lesson_plan(
-        self,
-        style_query: str,
-        user_context: UserContext
-    ) -> LessonContent:  # Change return type
-        """Generate comprehensive lesson plan"""
-        # Search for current information
-        search_results = await self.search_tool.search_art_style(style_query)
-        
-        # Get canonical knowledge if available
-        canonical_data = self.canonical_lessons.get(style_query.lower(), {})
-        
-        # Prepare search context
-        search_context = self._prepare_search_context(search_results)
-        
-        # Generate lesson content using the lesson generator
-        lesson_content = await self.lesson_generator.generate_lesson_content(
-            style=style_query,
-            search_context=search_context,
-            canonical_context=canonical_data,
-            user_level=user_context.level,
-            user_interests=user_context.interests,
-            learning_goals=user_context.learning_goals
-        )
-        
-        return lesson_content
-    
-    def _prepare_search_context(self, search_results: List[Dict]) -> str:
-        """Prepare search results as context for LLM"""
-        context_parts = []
-        for i, result in enumerate(search_results[:5]):  # Use top 5 results
-            context_parts.append(
-                f"Source {i+1}: {result.get('title', 'Unknown')}\n"
-                f"Content: {result.get('snippet', 'No content available')}\n"
-                f"URL: {result.get('url', 'No URL')}\n"
-            )
-        return "\n".join(context_parts)
-    
-    # Update the compare_art_styles method to use lesson generator
-    async def compare_art_styles(
-        self,
-        style1: str,
-        style2: str,
-        user_context: UserContext
-    ) -> Dict[str, Any]:
-        """Compare two art styles"""
-        # Get data for both styles
-        results1 = await self.search_tool.search_art_style(style1)
-        results2 = await self.search_tool.search_art_style(style2)
-        
-        canonical1 = self.canonical_lessons.get(style1.lower(), {})
-        canonical2 = self.canonical_lessons.get(style2.lower(), {})
-        
-        # Generate lesson content for both styles to get structured data
-        search_context1 = self._prepare_search_context(results1)
-        search_context2 = self._prepare_search_context(results2)
-        
-        lesson1 = await self.lesson_generator.generate_lesson_content(
-            style1, search_context1, canonical1, user_context.level
-        )
-        lesson2 = await self.lesson_generator.generate_lesson_content(
-            style2, search_context2, canonical2, user_context.level
-        )
-        
-        # Convert lessons to dict for comparison
-        lesson1_dict = {
-            "key_characteristics": lesson1.key_characteristics,
-            "materials_needed": lesson1.materials_needed,
-            "difficulty_level": lesson1.difficulty_level
+        1) Generate lesson
+        {
+        "action": "generate_lesson",
+        "style": "<style name string>",                # e.g., "Warli"
+        "user_level": "<beginner|intermediate|advanced>",
+        "user_interests": ["..."] (optional),
+        "learning_goals": ["..."] (optional),
+        "search_context": "<concatenated search snippets>" (optional),
+        "canonical_context": { ... } (optional small dict for grounding),
+        "language": "en" (optional ISO code, default "en"),
+        "max_duration": "string" (optional human-friendly e.g. '30 minutes' or '2 hours')
         }
-        
-        lesson2_dict = {
-            "key_characteristics": lesson2.key_characteristics,
-            "materials_needed": lesson2.materials_needed,
-            "difficulty_level": lesson2.difficulty_level
+
+        2) Compare styles
+        {
+        "action": "compare_styles",
+        "style1": "<style name string>",
+        "style2": "<style name string>",
+        "user_level": "<beginner|intermediate|advanced>",
+        "search_context1": "<snippets for style1>" (optional),
+        "search_context2": "<snippets for style2>" (optional),
+        "canonical_context1": {...} (optional),
+        "canonical_context2": {...} (optional),
+        "language": "en" (optional)
         }
-        
-        # Generate comparison
-        comparison = self.lesson_generator.generate_comparison_content(
-            style1, style2, lesson1_dict, lesson2_dict, user_context.level
-        )
-        
-        return comparison
+
+        RESPONSE RULES (APPLY STRICTLY):
+        - You must output ONLY a single JSON object (no markdown, no explanation).
+        - Keys and types must match exactly the schemas below. If you cannot fill a field, set it to an appropriate empty value (empty array, "N/A" string, or null); DO NOT omit keys.
+        - Prefer grounded claims: if search_context or canonical_context is provided, use its language/snippets to ground historical or factual claims. If a claim is not verifiable, mark it with the string "needs verification" in the relevant field (do not invent).
+        - Keep all textual values concise and actionable (overview <= 160 words; each practice step 1–2 sentences). Localize textual values to the "language" if provided; keys remain in English.
+        - Include a "confidence" float in outputs (0.0–1.0) representing how confident you are in the grounding of factual statements. If confidence < 0.6, include "recommend_human_review": true.
+
+        SCHEMA A — LessonContent JSON (for action = generate_lesson)
+        {
+        "title": string,
+        "overview": string,
+        "historical_context": string,
+        "key_characteristics": [string],
+        "materials_needed": [string],
+        "techniques": [string],
+        "practice_steps": [                     # 3–5 progressive steps
+            { "step": "1", "description": string, "duration": "15 minutes" }
+        ],
+        "common_mistakes": [string],
+        "template_description": string,
+        "quiz_questions": [                      # 1–4 short questions
+            { "question": string, "options": [string], "correct_answer": string }
+        ],
+        "sources": [                             # include at most 5 sources pulled from search_context
+            { "title": string, "url": string }
+        ],
+        "estimated_duration": string,            # human readable, e.g., "1.5 hours"
+        "difficulty_level": string,              # echo user_level or normalized value
+        "confidence": float,                     # 0.0 - 1.0
+        "recommend_human_review": bool           # true if confidence < 0.6 or sensitive content
+        }
+
+        SCHEMA B — Comparison JSON (for action = compare_styles)
+        {
+        "style1": "<style1 name>",
+        "style2": "<style2 name>",
+        "similarities": [string],
+        "differences": [
+            { "aspect": "Key Characteristics", "style1": [string], "style2": [string] },
+            { "aspect": "Materials", "style1": [string], "style2": [string] },
+            { "aspect": "Difficulty", "style1": string, "style2": string }
+        ],
+        "recommended_style": "<style name best for user_level>",
+        "reasoning": string,
+        "confidence": float,
+        "recommend_human_review": bool
+        }
+
+        GUIDELINES FOR CONTENT GENERATION:
+        - Practice steps should be progressive: warm-up → focused drill → mini-project. Always include realistic durations.
+        - Materials should list traditional items first and then low-cost/substitutes in parentheses.
+        - Techniques should be actionable (e.g., "steady-line exercises", "brush-loading technique", "repeat border motif rhythm").
+        - Common mistakes must be specific and fixable (e.g., "inconsistent line-weight — practice 5-minute steady-line drill").
+        - Template description must be printable-friendly (paper size, grid/guide layout, 1–2 sentences).
+        - Quiz questions should be simple knowledge checks suitable for the user_level.
+        - For comparison, focus on actionable differences that affect a learner (materials cost, technical difficulty, cultural considerations).
+        - Respect cultural sensitivity: when in doubt, mark historical/contextual claims as "needs verification".
+
+        ERROR HANDLING:
+        - If input is malformed or missing required fields, return:
+        { "error": "malformed_input", "message": "explain which field is missing" }
+        (This is the only case where an "error" key is allowed.)
+        - If the agent cannot find any grounding and must hallucinate, set "confidence": 0.25 and "recommend_human_review": true.
+
+        EXAMPLE (input -> generate_lesson for Warli):
+        Input:
+        {"action":"generate_lesson","style":"Warli","user_level":"beginner","language":"en","search_context":"Source1: ...", "canonical_context":{"summary":"Warli uses stick figures"}}
+        Output: ONLY the LessonContent JSON as specified above.
+    """,
+    tools=[]
+)
