@@ -2,7 +2,7 @@ from google.adk import LlmAgent
 from config import settings
 
 lesson_agent = LlmAgent(
-    model=settings.LLM_MODEL,
+    model="gemini-2.5-flash",
     name="lesson_generator_agent",
     description="""
         Generates structured, culturally respectful art lessons for a requested style

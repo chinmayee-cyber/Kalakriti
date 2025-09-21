@@ -1,9 +1,13 @@
 from google.adk.agents import LlmAgent
-from config import settings
+from google.adk.sessions import InMemorySessionService
 from tools.search_tool import TavilySearchTool
 
+# Initialize session service (memory)
+session_service = InMemorySessionService()
+
+# Define tutor agent with memory
 tutor_agent = LlmAgent(
-    model=settings.LLM_MODEL,
+    model="gemini-2.5-flash",
     name="tutor_agent",
     description="""
         Tutor agent that generates structured, culturally respectful art lessons and 
@@ -104,11 +108,7 @@ tutor_agent = LlmAgent(
         { "error": "malformed_input", "message": "explain which field is missing" }
         (This is the only case where an "error" key is allowed.)
         - If the agent cannot find any grounding and must hallucinate, set "confidence": 0.25 and "recommend_human_review": true.
-
-        EXAMPLE (input -> generate_lesson for Warli):
-        Input:
-        {"action":"generate_lesson","style":"Warli","user_level":"beginner","language":"en","search_context":"Source1: ...", "canonical_context":{"summary":"Warli uses stick figures"}}
-        Output: ONLY the LessonContent JSON as specified above.
     """,
-    tools=[TavilySearchTool()]
+    tools=[TavilySearchTool()],
+    session_service=session_service
 )
