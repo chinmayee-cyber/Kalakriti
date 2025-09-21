@@ -1,25 +1,105 @@
 {
   "pages": {
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+    "/_not-found/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/app/_not-found/page-8c0fad1f8daeb4aa.js"
     ],
     "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/css/13259dc9ccfa6acd.css",
+      "static/css/95ce0ebcb43dc698.css",
+      "static/chunks/app/layout-a615ddc55ba6f6c9.js"
     ],
-    "/dashboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/page.js"
+    "/dashboard/crypto-valuation/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/crypto-valuation/page-a09beadc7a3365c0.js"
     ],
     "/dashboard/inclusive-promotion/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/inclusive-promotion/page.js"
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/inclusive-promotion/page-d93537bdb884f706.js"
+    ],
+    "/dashboard/market-trends/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/market-trends/page-5eab7dd9d25ae31a.js"
+    ],
+    "/dashboard/multimodal-experience/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/multimodal-experience/page-07f3b0d2b9da34f8.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/app/dashboard/page-95045b41807a883e.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/app/page-395b2e4d69e65a5e.js"
+    ],
+    "/dashboard/social-promotion/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/social-promotion/page-ab84112b4fc84093.js"
+    ],
+    "/dashboard/art-education/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/562-246248a3631735a7.js",
+      "static/chunks/app/dashboard/art-education/page-fc3009764e7a7aa7.js"
+    ],
+    "/dashboard/supply-chain/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/app/dashboard/supply-chain/page-3f4e66aea55960d8.js"
+    ],
+    "/dashboard/art-auction/page": [
+      "static/chunks/webpack-373d5f4a325b2311.js",
+      "static/chunks/8bc8d761-0f6fc6c1809a60a7.js",
+      "static/chunks/240-6151b1c9fa447219.js",
+      "static/chunks/main-app-0380660d358f19ee.js",
+      "static/chunks/450-4c7c43cb0856ec05.js",
+      "static/chunks/app/dashboard/art-auction/page-43a069662a173be5.js"
     ]
   }
 }

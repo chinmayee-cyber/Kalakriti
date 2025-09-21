@@ -1,4 +1,4 @@
-// File: /Users/Shrijul/Desktop/GenAI Echange Hackathon/Kalakriti/kalakriti-website/app/dashboard/page.tsx
+// File: /Users/Shrijul/Desktop/GenAI Exchange Hackathon/Kalakriti/kalakriti-website/app/dashboard/page.tsx
 import * as entry from '../../../../app/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

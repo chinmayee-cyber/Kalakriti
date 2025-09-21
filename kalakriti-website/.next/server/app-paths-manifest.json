@@ -1,5 +1,13 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/dashboard/crypto-valuation/page": "app/dashboard/crypto-valuation/page.js",
   "/dashboard/inclusive-promotion/page": "app/dashboard/inclusive-promotion/page.js",
+  "/dashboard/market-trends/page": "app/dashboard/market-trends/page.js",
+  "/dashboard/multimodal-experience/page": "app/dashboard/multimodal-experience/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/dashboard/social-promotion/page": "app/dashboard/social-promotion/page.js",
+  "/dashboard/art-education/page": "app/dashboard/art-education/page.js",
+  "/dashboard/supply-chain/page": "app/dashboard/supply-chain/page.js",
+  "/dashboard/art-auction/page": "app/dashboard/art-auction/page.js"
 }
