@@ -1,5 +1,6 @@
 from google.adk.agents import LlmAgent
 from config import settings
+from tools.search_tool import TavilySearchTool
 
 tutor_agent = LlmAgent(
     model=settings.LLM_MODEL,
@@ -45,7 +46,7 @@ tutor_agent = LlmAgent(
         - Keys and types must match exactly the schemas below. If you cannot fill a field, set it to an appropriate empty value (empty array, "N/A" string, or null); DO NOT omit keys.
         - Prefer grounded claims: if search_context or canonical_context is provided, use its language/snippets to ground historical or factual claims. If a claim is not verifiable, mark it with the string "needs verification" in the relevant field (do not invent).
         - Keep all textual values concise and actionable (overview <= 160 words; each practice step 1–2 sentences). Localize textual values to the "language" if provided; keys remain in English.
-        - Include a "confidence" float in outputs (0.0–1.0) representing how confident you are in the grounding of factual statements. If confidence < 0.6, include "recommend_human_review": true.
+        - Include a "confidence" float in outputs (0.0-1.0) representing how confident you are in the grounding of factual statements. If confidence < 0.6, include "recommend_human_review": true.
 
         SCHEMA A — LessonContent JSON (for action = generate_lesson)
         {
@@ -55,12 +56,12 @@ tutor_agent = LlmAgent(
         "key_characteristics": [string],
         "materials_needed": [string],
         "techniques": [string],
-        "practice_steps": [                     # 3–5 progressive steps
+        "practice_steps": [                     # 3-5 progressive steps
             { "step": "1", "description": string, "duration": "15 minutes" }
         ],
         "common_mistakes": [string],
         "template_description": string,
-        "quiz_questions": [                      # 1–4 short questions
+        "quiz_questions": [                      # 1-4 short questions
             { "question": string, "options": [string], "correct_answer": string }
         ],
         "sources": [                             # include at most 5 sources pulled from search_context
@@ -109,5 +110,5 @@ tutor_agent = LlmAgent(
         {"action":"generate_lesson","style":"Warli","user_level":"beginner","language":"en","search_context":"Source1: ...", "canonical_context":{"summary":"Warli uses stick figures"}}
         Output: ONLY the LessonContent JSON as specified above.
     """,
-    tools=[]
+    tools=[TavilySearchTool()]
 )
